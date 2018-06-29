@@ -12,7 +12,7 @@ void Board::draw(sf::RenderWindow& window) {
 	}
 }
 
-void Board::putStone(Stone* stone) {
+void Board::putStone(std::shared_ptr<Stone> stone) {
 	stoneMap.insert(std::pair<std::pair<int, int>, std::shared_ptr<Stone>>{std::pair<int, int>{stone->getX(),stone->getY()}, std::shared_ptr<Stone>(stone)});
 }
 

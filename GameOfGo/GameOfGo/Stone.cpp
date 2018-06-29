@@ -93,7 +93,7 @@ bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
 		//s'il n'y a pas de pierre de même couleur adjacente
 		if (neighboursSame == 0) {
 			myStone->formation = std::shared_ptr<Formation>(new Formation(myStone));
-			myBoard.putStone(myStone.get());
+			myBoard.putStone(myStone);
 		}
 		//s'il y a 1 à 4 pierres de même couleur adjacentes
 		else if (neighboursSame>=1){
@@ -116,8 +116,8 @@ bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
 			}
 			else {
 				myStone->formation=std::shared_ptr<Formation>(new Formation(oldFormations));
-				myStone->formation->addStone(myStone.get());
-				myBoard.putStone(myStone.get());
+				myStone->formation->addStone(myStone);
+				myBoard.putStone(myStone);
 			}
 		}
 		//update global

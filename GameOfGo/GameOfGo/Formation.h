@@ -14,7 +14,7 @@ public:
 	Formation(std::map<std::shared_ptr<Formation>, int>); 
 	Formation(std::shared_ptr<Stone> stone); //permet de créer une formation avec une seule pierre dedans
 	void update();
-	void addStone(Stone* stone);
+	void addStone(std::shared_ptr<Stone>);
 	int getLiberties();
 	void removeLast();
 };

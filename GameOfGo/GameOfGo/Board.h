@@ -13,7 +13,7 @@ public:
 	float getCaseSize();
 	Board();
 	void draw(sf::RenderWindow& window);
-	void putStone(Stone* stone);
+	void putStone(std::shared_ptr<Stone>);
 	Stone* getStone(int x, int y);
 	void removeFromMap(Stone* stone);
 
