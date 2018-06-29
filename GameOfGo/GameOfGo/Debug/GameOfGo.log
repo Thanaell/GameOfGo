@@ -1,0 +1,4 @@
+﻿  GameOfGo.cpp
+d:\visualstudioworkspace\gameofgo\gameofgo\gameofgo.cpp(31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\visualstudioworkspace\gameofgo\gameofgo\gameofgo.cpp(32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  GameOfGo.vcxproj -> D:\VisualStudioWorkspace\GameOfGo\Debug\GameOfGo.exe
