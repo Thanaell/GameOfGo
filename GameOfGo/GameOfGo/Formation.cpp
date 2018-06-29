@@ -33,8 +33,8 @@ void Formation::update(){
 
 }
 
-void Formation::addStone(std::shared_ptr<Stone> stone){
-	stones.push_back(stone);
+void Formation::addStone(Stone* stone){
+	stones.push_back(std::shared_ptr<Stone>(stone));
 	update();
 }
 
