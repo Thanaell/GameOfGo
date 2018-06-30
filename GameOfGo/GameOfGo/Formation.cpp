@@ -47,16 +47,16 @@ void Formation::removeLast(){
 	stones.pop_back();
 }
 
-
-Formation::Formation(std::map<std::shared_ptr<Formation>,int> oldFormations) : board(oldFormations.begin()->first->board){
-	for (auto it : oldFormations) {
-		for (auto oldStone: it.first->stones) {
-			stones.push_back(oldStone);
-			oldStone->setFormation(std::shared_ptr<Formation>(this));
-		}
-	}
-	update();
+std::vector<std::shared_ptr<Stone>> Formation::getStones()
+{
+	return stones;
 }
+
+
+Formation::Formation(Board & myBoard): board(myBoard)
+{
+}
+
 
 Formation::Formation(std::shared_ptr<Stone> stone) : board(stone->getBoard()), liberties(stone->getLiberties()){
 	stones.push_back(stone);

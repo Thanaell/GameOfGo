@@ -11,10 +11,11 @@ class Formation {
 public:
 	//permet de réunir des formations existantes en une seule (doit accepter et ignorer les nullptr)
 	//avec une map pour éviter les doublons
-	Formation(std::map<std::shared_ptr<Formation>, int>); 
+	Formation(Board& myBoard);
 	Formation(std::shared_ptr<Stone> stone); //permet de créer une formation avec une seule pierre dedans
 	void update();
 	void addStone(std::shared_ptr<Stone>);
 	int getLiberties();
 	void removeLast();
+	std::vector<std::shared_ptr<Stone>> getStones();
 };
