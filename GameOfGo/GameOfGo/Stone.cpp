@@ -47,12 +47,15 @@ void Stone::setFormation(std::shared_ptr<Formation> myFormation){
 
 //TODO: gestion des kos
 bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
-
+	int kox = myBoard.getkoX();
+	int koy = myBoard.getkoY();
+	bool isKoUpdated = false;
 	bool isStonePlaced = false;
 
-	//on se débarasse tout de suite du cas où on clique sur une pierre déjà existante ou en dehors du plateau
+	//on se débarasse tout de suite du cas où on clique sur une pierre déjà existante, en dehors du plateau, ou sur le ko
 	if (myBoard.getStone(x, y) != nullptr) return isStonePlaced;
 	if (x < 0 || y < 0 || x>18 || y>18) return isStonePlaced;
+	if (x == kox && y == koy) return isStonePlaced;
 
 	//création de la nouvelle pierre
 	std::shared_ptr<Stone> myStone=std::make_shared<Stone>(Stone(x, y, color, myBoard));
@@ -120,21 +123,50 @@ bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
 		}
 	}
 	myStone->formation->update();
-	//TODO: impossibilité de placer une pierre à un endroit qui tue la formation
+
+	//impossibilité de placer une pierre à un endroit qui tue la formation
 	if (myStone->formation->getIsKilled()==false) {
 		isStonePlaced = true;
 		}
 	if (!isStonePlaced) {
 		myBoard.removeFromMap(myStone.get());
-		//TODO:reformer les formations antérieures (récupérer le set oldFormations original, et recréer les formations supprimées)
+		//on reforme les formations antérieures (récupérer le set oldFormations original, et recréer les formations supprimées)
 		for (auto it : oldFormationsCopy) {
 			for (auto stoneToCreate: it->getStones()) {
 				stoneToCreate->formation = it;
 				myBoard.putStone(stoneToCreate);			
 			}
 		}
-
 	}
+	else {
+		//déterminer s'il y a un ko et changer le booléen isKoUpdated en conséquence
+		//il y a un ko en x,y si la seule pierre enlevée était en x y
+		//déterminer quelle est l'unique pierre enlevée (s'il y en a une)
+		//on compare les nouveaux voisins aux anciens, le ko est celui qui est à nullptr
+		std::vector<Stone*> newNeighbours;
+		newNeighbours.push_back(myBoard.getStone(x - 1, y));
+		newNeighbours.push_back(myBoard.getStone(x + 1, y));
+		newNeighbours.push_back(myBoard.getStone(x, y - 1));
+		newNeighbours.push_back(myBoard.getStone(x, y + 1));
+		int nbRemoved = 0;
+		for (int i = 0; i < newNeighbours.size(); i++) {
+			if (neighbours[i] != nullptr && neighbours[i]->formation->getStones().size() == 1 && newNeighbours[i] == nullptr ) {
+				nbRemoved++;
+				kox = neighbours[i]->x;
+				koy = neighbours[i]->y;
+			}
+		}
+		//si on a enlevé qu'un seul voisin, et que sa formation était de taille 1
+		if (nbRemoved == 1){
+			isKoUpdated = true;
+		}
+	}
+		//si on a posé une pierre sans générer de nouveau ko, on reset le ko en -1 -1
+	if (!isKoUpdated) {
+		kox = -1;
+		koy = -1;
+	}
+	myBoard.setkoPosition(kox, koy);
 	return isStonePlaced;
 }
 

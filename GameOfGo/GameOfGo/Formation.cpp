@@ -44,10 +44,6 @@ int Formation::getLiberties()
 	return liberties;
 }
 
-void Formation::removeLast(){
-	stones.pop_back();
-}
-
 std::vector<std::shared_ptr<Stone>> Formation::getStones()
 {
 	return stones;

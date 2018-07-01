@@ -29,7 +29,24 @@ void Board::removeFromMap(Stone * stone){
 	stoneMap.erase(std::pair<int, int>{stone->getX(), stone->getY()});
 }
 
-Board::Board(): margeSize(28.f),caseSize(46.f){
+int Board::getkoX()
+{
+	return kox;
+}
+
+int Board::getkoY()
+{
+	return koy;
+}
+
+void Board::setkoPosition(int x, int y)
+{
+	kox = x;
+	koy = y;
+
+}
+
+Board::Board(): margeSize(28.f),caseSize(46.f), kox(-1),koy(-1){
 	if (!texture.loadFromFile("../background.png")) {
 		std::cout << "erreur chargement image";
 	}

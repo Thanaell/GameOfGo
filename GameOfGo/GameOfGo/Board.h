@@ -4,6 +4,9 @@
 #include "Stone.h"
  class Board
 {
+	//position du ko, à -1 -1 s'il n'y en a pas
+	int kox;
+	int koy;
 	float margeSize;
 	float caseSize;
 	sf::Texture texture;
@@ -16,5 +19,9 @@ public:
 	void putStone(std::shared_ptr<Stone>);
 	Stone* getStone(int x, int y);
 	void removeFromMap(Stone* stone);
+	int getkoX();
+	int getkoY();
+	void setkoPosition(int x, int y);
+	
 
 };
