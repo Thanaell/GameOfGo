@@ -9,6 +9,7 @@ void Formation::update(){
 		liberties += it->getLiberties();
 	}
 	if (liberties == 0) {
+		isKilled = true;
 		std::vector<std::pair<int, int>> oldStones; //vecteur temporaire pour permettre l'updtae
 		for (auto it : stones) {
 			oldStones.push_back({ it->getX(),it->getY() });
@@ -38,6 +39,11 @@ void Formation::addStone(std::shared_ptr<Stone> stone){
 	update();
 }
 
+void Formation::addStoneNoUpdate(std::shared_ptr<Stone> stone)
+{
+	stones.push_back(stone);
+}
+
 int Formation::getLiberties()
 {
 	return liberties;
@@ -52,12 +58,17 @@ std::vector<std::shared_ptr<Stone>> Formation::getStones()
 	return stones;
 }
 
+bool Formation::getIsKilled()
+{
+	return isKilled;;
+}
 
-Formation::Formation(Board & myBoard): board(myBoard)
+
+Formation::Formation(Board & myBoard): board(myBoard),isKilled(false)
 {
 }
 
 
-Formation::Formation(std::shared_ptr<Stone> stone) : board(stone->getBoard()), liberties(stone->getLiberties()){
+Formation::Formation(std::shared_ptr<Stone> stone) : board(stone->getBoard()), liberties(stone->getLiberties()),isKilled(false){
 	stones.push_back(stone);
 }
