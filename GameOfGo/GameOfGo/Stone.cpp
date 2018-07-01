@@ -111,7 +111,7 @@ bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
 			}
 		}
 		myStone->formation = newFormation;
-		myStone->formation->addStone(myStone);
+		myStone->formation->addStoneNoUpdate(myStone);
 		myBoard.putStone(myStone);
 	//update global
 	for (auto it : neighbours) {
@@ -119,6 +119,7 @@ bool Stone::createStone(int x, int y, StoneColor color, Board& myBoard) {
 			it->updateFormation();
 		}
 	}
+	myStone->formation->update();
 	//TODO: impossibilité de placer une pierre à un endroit qui tue la formation
 	if (myStone->formation->getIsKilled()==false) {
 		isStonePlaced = true;

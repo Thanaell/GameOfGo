@@ -15,7 +15,6 @@ public:
 	Formation(Board& myBoard);
 	Formation(std::shared_ptr<Stone> stone); //permet de créer une formation avec une seule pierre dedans
 	void update();
-	void addStone(std::shared_ptr<Stone>);
 	void addStoneNoUpdate(std::shared_ptr<Stone>);
 	int getLiberties();
 	void removeLast();
